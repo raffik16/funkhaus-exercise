@@ -1,32 +1,65 @@
 <template>
+<div>
+    
     <ul class="name-list">
         <!-- Run v-for loop to map through json and render titles and images  -->
-        <li v-for="(editor, index) in db" v-bind:key="index">
-            <span class="editor-name">{{ editor.title }}</span>
+
+        <li v-for="(editor, index) in db" v-bind:key="index"  @mouseenter="carousel = index"
+        @mouseleave="carousel = null"
+        >
+            <span class="editor-name">
+                {{ editor.title }}
+            </span>
             <img class="hover-image" :src=editor.featuredImage.sourceUrl />
-            <!-- {{editor.featuredImage.mediaItemId}} -->
         </li>
 
-        <!-- Get carousel Images. -->
-        <!-- <div v-for="(dbImages, images) in dbImages" :key='images'>
+          <swiper class="swiper" :options="swiperOption"
+          :class="{ show : carousel }">
+            <swiper-slide
+                v-for="(dbImages, images) in dbImages"
+                :key="images">
                 <img class="the-image" :src="dbImages.sourceUrl" />
-        </div>
-         -->
+            </swiper-slide>
+        </swiper>
+        
     </ul>
+
+  
+</div>
 </template>
 
 <script>
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import 'assets/swiper-bundle.min.css'
+
+// Import for Hover Images
 import db from 'assets/db.json';
-// import dbImages from 'assets/db.json';
+
+// Import for Carousel Images
+import dbImages from 'assets/db.json';
 
 export default {
     name: 'editors',
     data: () => {
         return {
-            db : db.pages,
-            // dbImages : dbImages.images
+            db : db.pages, // Map Pages Array
+            dbImages : dbImages.images, // Map Images Array
+            swiperOption: { // Swiper configs
+                loop: true,
+                initialSlide: 0,
+                autoplay: {
+                    delay: 1500,
+                    disableOnInteraction: false
+                },
+                speed: 800,
+            },
+            carousel: null,
         }
     },
+    components: {
+      Swiper,
+      SwiperSlide
+    }
 }
 </script>
 
@@ -60,6 +93,7 @@ li:hover {
     color: #fff;
 }
 
+/* @TODO add focus */
 li:hover img {
     display: block;
     position: fixed;
@@ -67,7 +101,7 @@ li:hover img {
     margin-left: -45%;
     top: 50%;
     margin-top: -25%;
-    animation: fadeInOpacity .6s forwards;
+    animation: fadeInOutOpacity 3s linear;
 }
 
 .hover-image {
@@ -76,42 +110,30 @@ li:hover img {
     width: 90%;
 }
 
-
-.carousel-view {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.carousel {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  
-  width: 24em;
-  min-height: 25em;
-}
-.slide {
-  flex: 0 0 20em;
-  height: 20em;
-  margin: 1em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 0.1em dashed #000;
-  border-radius: 50%;
-  transition: transform 0.3s ease-in-out;
-}
-.slide:first-of-type {
-  opacity: 0;
-}
-.slide:last-of-type {
-  opacity: 0;
+.swiper {
+    opacity: 0;
+    z-index: 10;
+    width: 90%;
 }
 
+.swiper .the-image {
+    max-height: 500px;
+    min-width: 905px;
+}
 
+.swiper.show {
+    position: absolute;
+    left: 50%;
+    margin-left: -452px;
+    top: 50%;
+    margin-top: -13%;
+    animation: fadeInOpacity .6s forwards;
+    animation-delay: 2s;
+}
+
+/* Fade In Animation */
 @keyframes fadeInOpacity {
-    0% {
+    0%{
         opacity: 0;
     }
     100% {
@@ -119,8 +141,19 @@ li:hover img {
     }
 }
 
-@media (min-width: 768px) {
+/* Fade In & Out Animation */
+@keyframes fadeInOutOpacity {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
 
+/* Mobile first Approach */
+/* These are Desktop Styles */
+@media (min-width: 768px) {
     .editor-name {
         padding-left: 0;
     }
@@ -132,7 +165,7 @@ li:hover img {
         margin-left: -35%;
         top: 15%;
         margin-top: 0;
-        animation: fadeInOpacity .6s forwards;
+        animation: fadeInOutOpacity 3s forwards;
     }
 
     .hover-image {
