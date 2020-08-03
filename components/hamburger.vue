@@ -18,7 +18,7 @@
 
 <script>
 // Import mapState function to update state
-import { mapState } from "vuex";
+import { mapState } from "vuex"
 
 export default {
   // Update state with the amount
@@ -44,7 +44,6 @@ export default {
 </script>
 
 <style scoped>
-
 /* Default Menu Button stlyes */
 .hamburger-btn {
   background: none;

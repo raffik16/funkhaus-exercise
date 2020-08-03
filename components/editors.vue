@@ -1,23 +1,29 @@
 <template>
     <ul class="name-list">
         <!-- Run v-for loop to map through json and render titles and images  -->
-        <li v-for="(editor, index) in db" v-bind:key="index"  @mouseenter="hoverOver = true"
+        <li v-for="(editor, index) in db.pages" v-bind:key="index"  @mouseenter="hoverOver = true"
         @mouseleave="hoverOver = false"
         @click="hoverOver = true"
         >
+            <!-- Set Editor Title -->
             <span class="editor-name">
                 {{ editor.title }} 
             </span>
 
-            <img class="hover-image" :src=editor.featuredImage.sourceUrl />
+            <!-- Set hover <img> tag -->
+            <img class="hover-image" :src="editor.featuredImage.sourceUrl" alt="Editor Featured image in our database" />
         </li>
 
+        <!-- Handle configs and hide/show classes. -->
         <swiper class="swiper" :options="swiperOptions"
         :class="{ 'is-shown' : hoverOver }">
+            <!-- Run v-for loop to map through slides -->
             <swiper-slide
-                v-for="(dbImages, images) in dbImages"
+                v-for="(swipeImages, images) in db.images"
                 :key="images">
-                <img class="the-image" :src="dbImages.sourceUrl" />
+
+                <!-- Set slide <img> tag -->
+                <img class="the-image" :src="swipeImages.sourceUrl" alt="Editor Images in our database" />
             </swiper-slide>
         </swiper>
     </ul>
@@ -31,17 +37,13 @@ import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import 'assets/swiper-bundle.min.css'
 
 // Import for Hover Images
-import db from 'assets/db.json';
-
-// Import for Carousel Images
-import dbImages from 'assets/db.json';
+import db from 'assets/db.json'
 
 export default {
     name: 'editors',
     data: () => {
         return {
-            db : db.pages, // Map Pages Array
-            dbImages : dbImages.images, // Map Images Array
+            db : db, // Map db at top level
             hoverOver: false, // Define initial hover state for <li>
             swiperOptions: { // Swiper Configs
                 loop: true,
@@ -91,7 +93,7 @@ li:hover {
     color: #fff;
 }
 
-/* @TODO add focus */
+/* @TODO Add mobile support */
 li:hover img {
     display: block;
     position: fixed;
