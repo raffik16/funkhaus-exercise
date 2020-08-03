@@ -1,4 +1,5 @@
-# funkhaus
+# Funkhaus Technical Assessment by Raffi Keklikian
+Project URL: [https://funkhaus-exercise.vercel.app](https://funkhaus-exercise.vercel.app)
 
 ## Build Setup
 
