@@ -4,17 +4,18 @@
     <ul class="name-list">
         <!-- Run v-for loop to map through json and render titles and images  -->
 
-        <li v-for="(editor, index) in db" v-bind:key="index"  @mouseenter="carousel = index"
-        @mouseleave="carousel = null"
+        <li v-for="(editor, index) in db" v-bind:key="index"  @mouseenter="hoverOver = true"
+        @mouseleave="hoverOver = false"
         >
             <span class="editor-name">
-                {{ editor.title }}
+                {{ editor.title }} 
             </span>
+
             <img class="hover-image" :src=editor.featuredImage.sourceUrl />
         </li>
 
-          <swiper class="swiper" :options="swiperOption"
-          :class="{ show : carousel }">
+          <swiper class="swiper" :options="swiperOptions"
+          :class="{ show : hoverOver }">
             <swiper-slide
                 v-for="(dbImages, images) in dbImages"
                 :key="images">
@@ -44,7 +45,8 @@ export default {
         return {
             db : db.pages, // Map Pages Array
             dbImages : dbImages.images, // Map Images Array
-            swiperOption: { // Swiper configs
+            hoverOver: false, // define inital hover state for <li>
+            swiperOptions: { // Swiper configs
                 loop: true,
                 initialSlide: 0,
                 autoplay: {
@@ -52,14 +54,13 @@ export default {
                     disableOnInteraction: false
                 },
                 speed: 800,
-            },
-            carousel: null,
+            }
         }
     },
     components: {
-      Swiper,
-      SwiperSlide
-    }
+        Swiper,
+        SwiperSlide
+    },
 }
 </script>
 
@@ -117,38 +118,18 @@ li:hover img {
 }
 
 .swiper .the-image {
-    max-height: 500px;
+    max-height: 193px;
     min-width: 905px;
 }
 
 .swiper.show {
-    position: absolute;
+    position: fixed;
     left: 50%;
-    margin-left: -452px;
+    margin-left: -169px;
     top: 50%;
-    margin-top: -13%;
+    margin-top: -25%;
     animation: fadeInOpacity .6s forwards;
     animation-delay: 2s;
-}
-
-/* Fade In Animation */
-@keyframes fadeInOpacity {
-    0%{
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-/* Fade In & Out Animation */
-@keyframes fadeInOutOpacity {
-    0%, 100% {
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
 }
 
 /* Mobile first Approach */
@@ -182,5 +163,37 @@ li:hover img {
     li {
         min-width: 33%;
     }
+
+    .swiper .the-image {
+        max-height: 500px;
+    }
+
+    .swiper.show {
+        position: absolute;
+        margin-left: -452px;
+        margin-top: -13%;
+    }
+
 }
+
+/* Fade In Animation */
+@keyframes fadeInOpacity {
+    0%{
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Fade In & Out Animation */
+@keyframes fadeInOutOpacity {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
 </style>
