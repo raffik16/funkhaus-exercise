@@ -1,16 +1,22 @@
 <template>
   <div class="container">
       <header>
+        <!-- Grouped <header> in two sections,
+        logo + h1 and icons + hamburger -->
+        <div class="group-header-content">
           <logo />
-          <a class="header-link">
+          <h1 class="header-link">
             Editors
-          </a>
+          </h1>
+        </div>
+
         <div class="group-navigation">
           <header-icons />
           <hamburger />
         </div>
       </header>
 
+      <!-- Injecting editor component in <main> -->
       <main>
         <editors />
       </main>
@@ -47,6 +53,7 @@ header {
   justify-content: space-between;
   margin-top: 45px;
 }
+
 .container {
   max-width: 1280px;
   margin: 0 auto;
@@ -56,14 +63,20 @@ header {
 .header-link {
   color: #FDC760;
   font-size: 18px;
+  font-weight: normal;
+  padding-left: 10px;
 }
 
-.group-header {
-    display: flex;
-    flex-direction: column;
-}
 .group-navigation {
-    display: flex;
+  display: flex;
+}
+
+.group-navigation svg {
+  padding-left: 10px;
+}
+
+.group-header-content svg {
+  padding-left: 10px;
 }
 
 .links {
@@ -71,8 +84,24 @@ header {
 }
 
 @media(min-width:768px){
-  .group-header {
-    flex-direction: row;
+  .group-header-content {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
   }
+
+  /* Resetting padding for desktop */
+  .header-link {
+    padding-left: 0;
+  }
+
+  .group-navigation svg {
+    padding-left: 0;
+  }
+
+  .group-header-content svg {
+    padding-left: 0;
+  }
+  
 }
 </style>

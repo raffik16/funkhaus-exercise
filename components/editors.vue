@@ -1,9 +1,7 @@
 <template>
-<div>
-    
     <ul class="name-list">
         <!-- Run v-for loop to map through json and render titles and images  -->
-        <button v-for="(editor, index) in db" v-bind:key="index"  @mouseenter="hoverOver = true"
+        <li v-for="(editor, index) in db" v-bind:key="index"  @mouseenter="hoverOver = true"
         @mouseleave="hoverOver = false"
         @click="hoverOver = true"
         >
@@ -12,25 +10,24 @@
             </span>
 
             <img class="hover-image" :src=editor.featuredImage.sourceUrl />
-        </button>
+        </li>
 
-          <swiper class="swiper" :options="swiperOptions"
-          :class="{ show : hoverOver }">
+        <swiper class="swiper" :options="swiperOptions"
+        :class="{ 'is-shown' : hoverOver }">
             <swiper-slide
                 v-for="(dbImages, images) in dbImages"
                 :key="images">
                 <img class="the-image" :src="dbImages.sourceUrl" />
             </swiper-slide>
         </swiper>
-        
     </ul>
-
-  
-</div>
 </template>
 
 <script>
+// Import Vue Swiper & SwiperSlide Functions
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+
+// Import swiper stylesheet
 import 'assets/swiper-bundle.min.css'
 
 // Import for Hover Images
@@ -45,7 +42,7 @@ export default {
         return {
             db : db.pages, // Map Pages Array
             dbImages : dbImages.images, // Map Images Array
-            hoverOver: false, // define inital hover state for <li>
+            hoverOver: false, // Define initial hover state for <li>
             swiperOptions: { // Swiper Configs
                 loop: true,
                 initialSlide: 0,
@@ -77,7 +74,7 @@ ul {
     padding-top: 162px;
 }
 
-button {
+li {
     color: #FDC760;
     font-size: 24px;
     line-height: 37px;
@@ -90,12 +87,12 @@ button {
     padding-left: 10px;
 }
 
-button:hover {
+li:hover {
     color: #fff;
 }
 
 /* @TODO add focus */
-button:hover img {
+li:hover img {
     display: block;
     position: fixed;
     left: 50%;
@@ -122,7 +119,7 @@ button:hover img {
     min-width: 905px;
 }
 
-.swiper.show {
+.swiper.is-shown {
     position: fixed;
     left: 50%;
     margin-left: -169px;
@@ -168,7 +165,7 @@ button:hover img {
         max-height: 500px;
     }
 
-    .swiper.show {
+    .swiper.is-shown {
         position: absolute;
         margin-left: -452px;
         margin-top: -13%;

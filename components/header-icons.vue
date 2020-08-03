@@ -1,4 +1,5 @@
 <template>
+    <!-- Pure svg icons -->
     <svg class="header-icons" xmlns="http://www.w3.org/2000/svg" width="149.318" height="50" viewBox="0 0 149.318 50"><g transform="translate(-51.807 -187.689)"><rect class="header-icons-a" width="49.81" height="50" transform="translate(51.807 187.689)"/>
     <path class="header-icons-a" d="M1329.3,1009.028" transform="translate(-1255.346 -797.767)"/><rect class="header-icons-b" width="49.811" height="50" transform="translate(101.504 187.689)"/>
     <path class="header-icons-b" d="M1353.8,1009.028" transform="translate(-1230.146 -797.767)"/><rect class="header-icons-c" width="49.811" height="50" transform="translate(151.314 187.689)"/>
