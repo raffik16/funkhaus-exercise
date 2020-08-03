@@ -3,16 +3,16 @@
     
     <ul class="name-list">
         <!-- Run v-for loop to map through json and render titles and images  -->
-
-        <li v-for="(editor, index) in db" v-bind:key="index"  @mouseenter="hoverOver = true"
+        <button v-for="(editor, index) in db" v-bind:key="index"  @mouseenter="hoverOver = true"
         @mouseleave="hoverOver = false"
+        @click="hoverOver = true"
         >
             <span class="editor-name">
                 {{ editor.title }} 
             </span>
 
             <img class="hover-image" :src=editor.featuredImage.sourceUrl />
-        </li>
+        </button>
 
           <swiper class="swiper" :options="swiperOptions"
           :class="{ show : hoverOver }">
@@ -46,7 +46,7 @@ export default {
             db : db.pages, // Map Pages Array
             dbImages : dbImages.images, // Map Images Array
             hoverOver: false, // define inital hover state for <li>
-            swiperOptions: { // Swiper configs
+            swiperOptions: { // Swiper Configs
                 loop: true,
                 initialSlide: 0,
                 autoplay: {
@@ -77,7 +77,7 @@ ul {
     padding-top: 162px;
 }
 
-li {
+button {
     color: #FDC760;
     font-size: 24px;
     line-height: 37px;
@@ -90,19 +90,19 @@ li {
     padding-left: 10px;
 }
 
-li:hover {
+button:hover {
     color: #fff;
 }
 
 /* @TODO add focus */
-li:hover img {
+button:hover img {
     display: block;
     position: fixed;
     left: 50%;
     margin-left: -45%;
     top: 50%;
     margin-top: -25%;
-    animation: fadeInOutOpacity 3s linear;
+    animation: fadeInOutOpacity 3s forwards;
 }
 
 .hover-image {
