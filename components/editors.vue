@@ -1,7 +1,7 @@
 <template>
     <ul class="name-list">
         <!-- Run v-for loop to map through json and render titles and images  -->
-        <li v-for="(editor, index) in db.pages" v-bind:key="index"  @mouseenter="hoverOver = true"
+        <li v-for="(editor, index) in database.pages" v-bind:key="index"  @mouseenter="hoverOver = true"
         @mouseleave="hoverOver = false"
         @click="hoverOver = true"
         >
@@ -15,13 +15,12 @@
         </li>
 
         <!-- Handle configs and hide/show classes. -->
-        <swiper class="swiper" :options="swiperOptions"
-        :class="{ 'is-shown swiper-container-fade' : hoverOver }">
+        <swiper class="swiper swiper-container-fade swiper-container-initialized swiper-container-horizontal" :options="swiperOptions"
+        :class="{'is-shown' : hoverOver }">
             <!-- Run v-for loop to map through slides -->
             <swiper-slide
-                v-for="(swipeImages, images) in db.images"
+                v-for="(swipeImages, images) in database.images"
                 :key="images">
-
                 <!-- Set slide <img> tag -->
                 <img class="the-image" :src="swipeImages.sourceUrl" alt="Editor Images in our database" />
             </swiper-slide>
@@ -36,14 +35,20 @@ import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 // Import swiper stylesheet
 import 'assets/swiper-bundle.min.css'
 
-// Import for Hover Images
-import db from 'assets/db.json'
+// Import axios for api call
+import axios from 'axios'
 
 export default {
     name: 'editors',
+    mounted() {
+        // Get data and set naming 
+        axios.get('https://raw.githubusercontent.com/funkhaus/technical-assessment/master/db.json').then(response => {
+            this.database = response.data
+        })
+    },
     data: () => {
         return {
-            db : db, // Map db at top level
+            database : [], // Map database to top level Array
             hoverOver: false, // Define initial hover state for <li>
             swiperOptions: { // Swiper Configs
                 effect: 'fade',
