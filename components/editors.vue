@@ -114,6 +114,7 @@ li:hover img {
     opacity: 0;
     z-index: 10;
     width: 90%;
+    position: fixed;
 }
 
 .swiper .the-image {
@@ -182,7 +183,7 @@ li:hover img {
     }
 }
 
-@media (min-width:1024px) {
+@media (min-width: 1024px) {
      .swiper.is-shown {
         margin-top: -13%;
      }
