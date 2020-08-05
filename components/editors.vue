@@ -94,7 +94,6 @@ li:hover {
     color: #fff;
 }
 
-/* @TODO Add mobile support */
 li:hover img {
     display: block;
     position: fixed;
@@ -125,7 +124,7 @@ li:hover img {
 .swiper.is-shown {
     position: fixed;
     left: 50%;
-    margin-left: -169px;
+    margin-left: -45%;
     top: 50%;
     margin-top: -25%;
     animation: fadeInOpacity .6s forwards;
@@ -169,6 +168,8 @@ li:hover img {
     
     .swiper {
         position: absolute;
+        width: 70%;
+        top: 15%;
     }
 
     .swiper .the-image {
@@ -177,10 +178,14 @@ li:hover img {
 
     .swiper.is-shown {
         position: absolute;
-        margin-left: -452px;
-        margin-top: -13%;
+        margin-left: -35%;
     }
+}
 
+@media (min-width:1024px) {
+     .swiper.is-shown {
+        margin-top: -13%;
+     }
 }
 
 /* Fade In Animation */
