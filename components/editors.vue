@@ -1,9 +1,11 @@
 <template>
+<div>
     <ul class="name-list">
         <!-- Run v-for loop to map through json and render titles and images  -->
         <li v-for="(editor, index) in database.pages" v-bind:key="index"  @mouseenter="hoverOver = true"
         @mouseleave="hoverOver = false"
         @click="hoverOver = true"
+        class="list-item"
         >
             <!-- Set Editor Title -->
             <span class="editor-name">
@@ -11,65 +13,62 @@
             </span>
 
             <!-- Set hover <img> tag -->
-            <img class="hover-image" :src="editor.featuredImage.sourceUrl" alt="Editor Featured image in our database" />
+            <img class="hover-image" :srcset="editor.featuredImage.srcSet" alt="Editor Featured image in our database" />
         </li>
 
         <!-- Handle configs and hide/show classes. -->
-        <swiper class="swiper swiper-container-fade swiper-container-initialized swiper-container-horizontal" :options="swiperOptions"
+        <!-- <swiper class="swiper swiper-container-fade swiper-container-initialized swiper-container-horizontal" :options="swiperOptions"
         :class="{'is-shown' : hoverOver }">
-            <!-- Run v-for loop to map through slides -->
             <swiper-slide
                 v-for="(swipeImages, images) in database.images"
                 :key="images">
-                <!-- Set slide <img> tag -->
                 <img class="the-image" :src="swipeImages.sourceUrl" alt="Editor Images in our database" />
             </swiper-slide>
-        </swiper>
+        </swiper> -->
+<br/>
     </ul>
+  <!-- <transition-group name="fade" tag="ul" mode="out-in" appear> -->
+
+
+        <li
+            v-for="(swipeImages, images) in database.images"
+            :key="images">
+            <img class="the-image" :srcset="swipeImages.srcSet" alt="Editor Images in our database" />
+        </li>
+
+  <!-- </transition-group> -->
+    
+</div>
 </template>
 
 <script>
-// Import Vue Swiper & SwiperSlide Functions
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-
-// Import swiper stylesheet
-import 'assets/swiper-bundle.min.css'
-
-// Import axios for api call
-import axios from 'axios'
 
 export default {
     name: 'editors',
-    mounted() {
-        // Get data and set naming 
-        axios.get('https://raw.githubusercontent.com/funkhaus/technical-assessment/master/db.json').then(response => {
-            this.database = response.data
-        })
+    // Using async await to fetch data with nuxt 
+    async fetch() {
+        this.database = await fetch(
+            'https://raw.githubusercontent.com/funkhaus/technical-assessment/master/db.json'
+            // Format result as json
+            ).then((res) => res.json())
     },
     data: () => {
         return {
             database : [], // Map database to top level Array
             hoverOver: false, // Define initial hover state for <li>
-            swiperOptions: { // Swiper Configs
-                effect: 'fade',
-                loop: true,
-                initialSlide: 0,
-                autoplay: {
-                    delay: 1500,
-                    disableOnInteraction: false
-                },
-                speed: 800,
-            }
+            show: false,
         }
-    },
-    components: {
-        Swiper,
-        SwiperSlide
     },
 }
 </script>
 
 <style scoped>
+/* .fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0
+} */
 .name-list {
     list-style: none;
     padding: 162px 10px 0;
@@ -77,7 +76,7 @@ export default {
     /* padding-top: 162px; */
 }
 
-li {
+.list-item {
     color: #FDC760;
     font-size: 24px;
     line-height: 37px;
@@ -90,11 +89,11 @@ li {
     /* padding-left: 10px; */
 }
 
-li:hover {
+.list-item:hover {
     color: #fff;
 }
 
-li:hover img {
+.list-item:hover img {
     display: block;
     position: fixed;
     left: 50%;
@@ -139,7 +138,7 @@ li:hover img {
         /* padding-left: 10px; */
     }
 
-    li:hover img {
+    .list-item:hover img {
         display: block;
         position: absolute;
         left: 50%;
@@ -163,7 +162,7 @@ li:hover img {
         grid-column-gap: 8%;
     }
 
-    li {
+    .list-item {
         min-width: 33%;
     }
     
