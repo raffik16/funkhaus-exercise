@@ -1,50 +1,55 @@
 <template>
-<div>
-    <ul class="name-list">
-        <!-- Run v-for loop to map through json and render titles and images  -->
-        <li v-for="(editor, index) in database.pages" v-bind:key="index"  @mouseenter="hoverOver = true"
-        @mouseleave="hoverOver = false"
-        @click="hoverOver = true"
-        class="list-item"
-        >
-            <!-- Set Editor Title -->
-            <span class="editor-name">
-                {{ editor.title }} 
-            </span>
+    <div>
+        <ul class="name-list">
+            <!-- Run v-for loop to map through json and render titles and images  -->
+            <li v-for="(editor, index) in database.pages" v-bind:key="index"  @mouseenter="hoverOver = true"
+            @mouseleave="hoverOver = false"
+            @click="hoverOver = true"
+            class="list-item"
+            >
+                <!-- Set Editor Title -->
+                <span class="editor-name">
+                    {{ editor.title }} 
+                </span>
 
-            <!-- Set hover <img> tag -->
-            <img class="hover-image" :srcset="editor.featuredImage.srcSet" alt="Editor Featured image in our database" />
-        </li>
+                <!-- Set hover <img> tag -->
+                <img class="hover-image" :srcset="editor.featuredImage.srcSet" alt="Editor Featured image in our database" />
+            </li>
 
-        <!-- Handle configs and hide/show classes. -->
-        <!-- <swiper class="swiper swiper-container-fade swiper-container-initialized swiper-container-horizontal" :options="swiperOptions"
-        :class="{'is-shown' : hoverOver }">
-            <swiper-slide
+        <div class="carousel-view" :class="{'is-shown' : hoverOver }">
+            <transition-group
+                tag="div"
+                name="slider"
+                class="carousel">
+                <div
                 v-for="(swipeImages, images) in database.images"
-                :key="images">
-                <img class="the-image" :src="swipeImages.sourceUrl" alt="Editor Images in our database" />
-            </swiper-slide>
-        </swiper> -->
-<br/>
-    </ul>
-  <!-- <transition-group name="fade" tag="ul" mode="out-in" appear> -->
+                    :key="images"
+                    class="slide"
+                    :class="images === 0 ? 'is-shown' : 'is-hidden'">
+                    <img class="the-image" :srcset="swipeImages.srcSet" alt="Editor Images in our database" />
+                </div>
+            </transition-group>
+        </div>
+        </ul>
+        
 
-
-        <li
-            v-for="(swipeImages, images) in database.images"
-            :key="images">
-            <img class="the-image" :srcset="swipeImages.srcSet" alt="Editor Images in our database" />
-        </li>
-
-  <!-- </transition-group> -->
-    
-</div>
+    </div>
 </template>
 
 <script>
 
 export default {
     name: 'editors',
+    created () {
+        this.$nextTick(function () {
+            if (process.browser){
+                window.setInterval(() => {
+                    const first = this.database.images.shift()
+                    this.database.images = this.database.images.concat(first)
+                }, 2900)
+            }
+        })
+    },
     // Using async await to fetch data with nuxt 
     async fetch() {
         this.database = await fetch(
@@ -58,22 +63,15 @@ export default {
             hoverOver: false, // Define initial hover state for <li>
             show: false,
         }
-    },
+    }
 }
 </script>
 
 <style scoped>
-/* .fade-enter-active, .fade-leave-active {
-  transition: opacity .5s
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0
-} */
 .name-list {
     list-style: none;
     padding: 162px 10px 0;
     position: relative;
-    /* padding-top: 162px; */
 }
 
 .list-item {
@@ -86,7 +84,6 @@ export default {
 .editor-name {
     position: relative;
     z-index: 20;
-    /* padding-left: 10px; */
 }
 
 .list-item:hover {
@@ -105,23 +102,26 @@ export default {
 
 .hover-image {
     display: none;
-    z-index: 10;
+    z-index: 20;
     width: 90%;
 }
 
-.swiper {
+.carousel-view {
     opacity: 0;
     z-index: 10;
-    width: 90%;
     position: fixed;
 }
 
-.swiper .the-image {
-    max-height: 193px;
-    min-width: 905px;
+.carousel {
+
+    width: 100%;
 }
 
-.swiper.is-shown {
+.carousel-view .the-image {
+    width: 100%;
+}
+
+.carousel-view.is-shown {
     position: fixed;
     left: 50%;
     margin-left: -45%;
@@ -129,6 +129,17 @@ export default {
     margin-top: -25%;
     animation: fadeInOpacity .6s forwards;
     animation-delay: 2s;
+}
+
+.slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeInOutSlides ease 3s infinite;
+}
+
+.slide.is-hidden {
+    display: none;
 }
 
 /* Mobile first Approach */
@@ -166,24 +177,22 @@ export default {
         min-width: 33%;
     }
     
-    .swiper {
+    .carousel-view {
         position: absolute;
         width: 70%;
         top: 15%;
     }
 
-    .swiper .the-image {
-        max-height: 500px;
-    }
 
-    .swiper.is-shown {
+
+    .carousel-view.is-shown {
         position: absolute;
         margin-left: -35%;
     }
 }
 
 @media (min-width: 1024px) {
-    .swiper.is-shown {
+    .carousel-view.is-shown {
         margin-top: -13%;
     }
 }
@@ -213,6 +222,19 @@ export default {
         opacity: 0;
     }
     50% {
+        opacity: 1;
+    }
+}
+
+/* Fade In & Out Animation */
+@keyframes fadeInOutSlides {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    75% {
         opacity: 1;
     }
 }
