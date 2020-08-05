@@ -16,7 +16,7 @@
 
         <!-- Handle configs and hide/show classes. -->
         <swiper class="swiper" :options="swiperOptions"
-        :class="{ 'is-shown' : hoverOver }">
+        :class="{ 'is-shown swiper-container-fade' : hoverOver }">
             <!-- Run v-for loop to map through slides -->
             <swiper-slide
                 v-for="(swipeImages, images) in db.images"
@@ -46,6 +46,7 @@ export default {
             db : db, // Map db at top level
             hoverOver: false, // Define initial hover state for <li>
             swiperOptions: { // Swiper Configs
+                effect: 'fade',
                 loop: true,
                 initialSlide: 0,
                 autoplay: {
@@ -65,11 +66,6 @@ export default {
 
 <style scoped>
 .name-list {
-    display: flex;
-    flex-direction: column;
-}
-
-ul {
     list-style: none;
     padding: 0;
     position: relative;
@@ -155,12 +151,19 @@ li:hover img {
     }
 
     .name-list {
-        flex-direction: row;
-        flex-wrap: wrap;
+        display: grid;
+        justify-items:left;
+        grid-template-columns: 33% 33% 18%;
+        grid-template-rows: auto;
+        grid-column-gap: 8%;
     }
 
     li {
         min-width: 33%;
+    }
+    
+    .swiper {
+        position: absolute;
     }
 
     .swiper .the-image {

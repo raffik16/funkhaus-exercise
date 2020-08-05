@@ -7,7 +7,7 @@
     v-bind:class="{ 'menu-clicked': toggleClass }"
   >
     <!-- Displaying that we are grabbing and counting each click.  -->
-    {{ counter }}
+    <!-- {{ counter }} -->
     <!-- Render bars for menu -->
     <div class="bar1"></div>
     <!-- Need invisible-bar to handle proper spacing on animation. -->

@@ -4,7 +4,7 @@
 </template>
 
 <style>
-  .logo{
+  .logo {
     fill:#fdc760;
   }
 </style>
