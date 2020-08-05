@@ -72,9 +72,9 @@ export default {
 <style scoped>
 .name-list {
     list-style: none;
-    padding: 0;
+    padding: 162px 10px 0;
     position: relative;
-    padding-top: 162px;
+    /* padding-top: 162px; */
 }
 
 li {
@@ -87,7 +87,7 @@ li {
 .editor-name {
     position: relative;
     z-index: 20;
-    padding-left: 10px;
+    /* padding-left: 10px; */
 }
 
 li:hover {
@@ -136,7 +136,7 @@ li:hover img {
 /* These are Desktop Styles */
 @media (min-width: 768px) {
     .editor-name {
-        padding-left: 10px;
+        /* padding-left: 10px; */
     }
 
     li:hover img {
@@ -190,9 +190,12 @@ li:hover img {
 }
 
 @media (min-width: 1280px) {
-    .editor-name {
-        padding-left: 0;
+    .name-list {
+        padding: 162px 0 0;
     }
+    /* .editor-name {
+        padding-left: 0;
+    } */
 }
 
 /* Fade In Animation */
