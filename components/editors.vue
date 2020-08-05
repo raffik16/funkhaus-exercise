@@ -136,7 +136,7 @@ li:hover img {
 /* These are Desktop Styles */
 @media (min-width: 768px) {
     .editor-name {
-        padding-left: 0;
+        padding-left: 10px;
     }
 
     li:hover img {
@@ -184,9 +184,15 @@ li:hover img {
 }
 
 @media (min-width: 1024px) {
-     .swiper.is-shown {
+    .swiper.is-shown {
         margin-top: -13%;
-     }
+    }
+}
+
+@media (min-width: 1280px) {
+    .editor-name {
+        padding-left: 0;
+    }
 }
 
 /* Fade In Animation */

@@ -90,6 +90,10 @@ header {
   padding-top: 15px;
 }
 
+.hamburger-btn {
+  padding-right: 10px;
+}
+
 @media(min-width:768px){
   /* Define desktop header content spacing */
   .group-header-content {
@@ -104,12 +108,25 @@ header {
   }
 
   .group-navigation svg {
+    padding-left: 10px;
+  }
+
+  .group-header-content svg {
+    padding-left: 10px;
+  }
+}
+
+@media(min-width:1280px){
+  .group-navigation svg {
     padding-left: 0;
   }
 
   .group-header-content svg {
     padding-left: 0;
   }
-  
+
+  .hamburger-btn {
+    padding-right: 0;
+  }
 }
 </style>
