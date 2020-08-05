@@ -29,11 +29,6 @@ export default {
       toggleClass: false,
     }
   },
-  // fetch(context) is called by the server-side
-  // and before instantiating the component
-  fetch({ store }) {
-    store.commit("increment");
-  },
   methods: {
     // Commit new state to the store
     increment() {
