@@ -2,7 +2,8 @@
     <div>
         <ul class="name-list">
             <!-- Run v-for loop to map through json and render titles and images  -->
-            <li v-for="(editor, index) in database.pages" v-bind:key="index"  @mouseenter="hoverOver = true"
+            <li v-for="(editor, index) in database.pages" v-bind:key="index"
+            @mouseenter="hoverOver = true"
             @mouseleave="hoverOver = false"
             @click="hoverOver = true"
             class="list-item"
@@ -16,23 +17,23 @@
                 <img class="hover-image" :srcset="editor.featuredImage.srcSet" alt="Editor Featured image in our database" />
             </li>
 
-        <div class="carousel-view" :class="{'is-shown' : hoverOver }">
-            <transition-group
-                tag="div"
-                name="slider"
-                class="carousel">
-                <div
-                v-for="(swipeImages, images) in database.images"
-                    :key="images"
-                    class="slide"
-                    :class="images === 0 ? 'is-shown' : 'is-hidden'">
-                    <img class="the-image" :srcset="swipeImages.srcSet" alt="Editor Images in our database" />
-                </div>
-            </transition-group>
-        </div>
+            <div class="carousel-view" :class="{'is-shown' : hoverOver }">
+                <!-- Handle animation in-out classes -->
+                <transition-group
+                    tag="div"
+                    name="slider"
+                    class="carousel">
+                    <!-- Iterate each carousel item -->
+                    <div
+                    v-for="(image, images) in database.images"
+                        :key="images"
+                        class="slide"
+                        :class="images === 0 ? 'is-shown' : 'is-hidden'">
+                        <img class="the-image" :srcset="image.srcSet" alt="Editor Images in our database" />
+                    </div>
+                </transition-group>
+            </div>
         </ul>
-        
-
     </div>
 </template>
 
@@ -42,11 +43,14 @@ export default {
     name: 'editors',
     created () {
         this.$nextTick(function () {
+            // Only run function when browser has loaded.
             if (process.browser){
+                // Run interval for image rotation
                 window.setInterval(() => {
+                    // Move showing image to the number one spot in the Array.
                     const first = this.database.images.shift()
                     this.database.images = this.database.images.concat(first)
-                }, 2900)
+                }, 5000)
             }
         })
     },
@@ -61,7 +65,6 @@ export default {
         return {
             database : [], // Map database to top level Array
             hoverOver: false, // Define initial hover state for <li>
-            show: false,
         }
     }
 }
@@ -83,7 +86,7 @@ export default {
 
 .editor-name {
     position: relative;
-    z-index: 20;
+    z-index: 30;
 }
 
 .list-item:hover {
@@ -113,8 +116,7 @@ export default {
 }
 
 .carousel {
-
-    width: 100%;
+    width: 95%;
 }
 
 .carousel-view .the-image {
@@ -135,7 +137,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: fadeInOutSlides ease 3s infinite;
+  animation: fadeInOutSlides ease-in-out 5s infinite;
 }
 
 .slide.is-hidden {
@@ -145,10 +147,6 @@ export default {
 /* Mobile first Approach */
 /* These are Desktop Styles */
 @media (min-width: 768px) {
-    .editor-name {
-        /* padding-left: 10px; */
-    }
-
     .list-item:hover img {
         display: block;
         position: absolute;
@@ -163,6 +161,10 @@ export default {
         display: none;
         z-index: 10;
         width: 70%;
+    }
+
+    .carousel {
+        width: 100%;
     }
 
     .name-list {
@@ -183,8 +185,6 @@ export default {
         top: 15%;
     }
 
-
-
     .carousel-view.is-shown {
         position: absolute;
         margin-left: -35%;
@@ -201,9 +201,6 @@ export default {
     .name-list {
         padding: 162px 0 0;
     }
-    /* .editor-name {
-        padding-left: 0;
-    } */
 }
 
 /* Fade In Animation */
@@ -234,7 +231,7 @@ export default {
     50% {
         opacity: 1;
     }
-    75% {
+    70% {
         opacity: 1;
     }
 }
