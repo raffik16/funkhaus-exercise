@@ -169,9 +169,8 @@ export default {
     .name-list {
         display: grid;
         justify-items:left;
-        grid-template-columns: 33% 33% 18%;
-        grid-template-rows: auto;
-        grid-column-gap: 8%;
+        grid-template-columns: 33% 33% 33%;
+        grid-column-gap: 2%;
     }
 
     .list-item {
@@ -194,11 +193,20 @@ export default {
     .carousel-view.is-shown {
         margin-top: -13%;
     }
+    .name-list {
+        display: grid;
+        grid-template-columns: 33% 30% 28%;
+        grid-column-gap: 6%;
+    }
 }
 
 @media (min-width: 1280px) {
     .name-list {
         padding: 162px 0 0;
+    }
+    .name-list {
+        display: grid;
+        grid-template-columns: 33% 33% 18%;
     }
 }
 
