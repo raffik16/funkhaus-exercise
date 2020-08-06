@@ -2,7 +2,7 @@
     <div>
         <ul class="name-list">
             <!-- Run v-for loop to map through json and render titles and images  -->
-            <li v-for="(editor, index) in database.pages" v-bind:key="index"
+            <li v-for="(editor, index) in database.pages" :key="index.id"
             @mouseenter="hoverOver = true"
             @mouseleave="hoverOver = false"
             @click="hoverOver = true"
@@ -25,8 +25,7 @@
                     class="carousel">
                     <!-- Iterate each carousel item -->
                     <div
-                    v-for="(image, images) in database.images"
-                        :key="images"
+                    v-for="(image, images) in database.images" :key="images"
                         class="slide"
                         :class="images === 0 ? 'is-shown' : 'is-hidden'">
                         <img class="the-image" :srcset="image.srcSet" alt="Editor Images in our database" />
